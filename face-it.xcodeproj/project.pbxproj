@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65334AE71CC9C924007B0548 /* VideoCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65334AE61CC9C924007B0548 /* VideoCaptureController.swift */; };
+		65334AE91CC9CF14007B0548 /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65334AE81CC9CF14007B0548 /* VideoCapture.swift */; };
+		65334AEB1CCAAC66007B0548 /* FaceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65334AEA1CCAAC66007B0548 /* FaceDetector.swift */; };
 		653545B51CC9C293007325D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653545B41CC9C293007325D2 /* AppDelegate.swift */; };
 		653545B71CC9C293007325D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653545B61CC9C293007325D2 /* ViewController.swift */; };
 		653545BA1CC9C293007325D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 653545B81CC9C293007325D2 /* Main.storyboard */; };
@@ -14,6 +17,8 @@
 		653545BF1CC9C293007325D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 653545BD1CC9C293007325D2 /* LaunchScreen.storyboard */; };
 		653545CA1CC9C293007325D2 /* face_itTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653545C91CC9C293007325D2 /* face_itTests.swift */; };
 		653545D51CC9C293007325D2 /* face_itUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653545D41CC9C293007325D2 /* face_itUITests.swift */; };
+		65A455711CCDA85000074905 /* HeartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A455701CCDA85000074905 /* HeartView.xib */; };
+		65A455731CCF26BB00074905 /* VideoCaptureDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A455721CCF26BB00074905 /* VideoCaptureDevice.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		65334AE61CC9C924007B0548 /* VideoCaptureController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCaptureController.swift; sourceTree = "<group>"; };
+		65334AE81CC9CF14007B0548 /* VideoCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
+		65334AEA1CCAAC66007B0548 /* FaceDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceDetector.swift; sourceTree = "<group>"; };
 		653545B11CC9C293007325D2 /* face-it.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "face-it.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		653545B41CC9C293007325D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		653545B61CC9C293007325D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +55,8 @@
 		653545D01CC9C293007325D2 /* face-itUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "face-itUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		653545D41CC9C293007325D2 /* face_itUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = face_itUITests.swift; sourceTree = "<group>"; };
 		653545D61CC9C293007325D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65A455701CCDA85000074905 /* HeartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeartView.xib; sourceTree = "<group>"; };
+		65A455721CCF26BB00074905 /* VideoCaptureDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCaptureDevice.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +84,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65334AE51CC9C88A007B0548 /* video-capture */ = {
+			isa = PBXGroup;
+			children = (
+				65A455701CCDA85000074905 /* HeartView.xib */,
+				65334AEA1CCAAC66007B0548 /* FaceDetector.swift */,
+				65334AE81CC9CF14007B0548 /* VideoCapture.swift */,
+				65334AE61CC9C924007B0548 /* VideoCaptureController.swift */,
+				65A455721CCF26BB00074905 /* VideoCaptureDevice.swift */,
+			);
+			name = "video-capture";
+			sourceTree = "<group>";
+		};
 		653545A81CC9C292007325D2 = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +119,7 @@
 		653545B31CC9C293007325D2 /* face-it */ = {
 			isa = PBXGroup;
 			children = (
+				65334AE51CC9C88A007B0548 /* video-capture */,
 				653545B41CC9C293007325D2 /* AppDelegate.swift */,
 				653545B61CC9C293007325D2 /* ViewController.swift */,
 				653545B81CC9C293007325D2 /* Main.storyboard */,
@@ -232,6 +255,7 @@
 				653545BF1CC9C293007325D2 /* LaunchScreen.storyboard in Resources */,
 				653545BC1CC9C293007325D2 /* Assets.xcassets in Resources */,
 				653545BA1CC9C293007325D2 /* Main.storyboard in Resources */,
+				65A455711CCDA85000074905 /* HeartView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +280,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65334AE91CC9CF14007B0548 /* VideoCapture.swift in Sources */,
+				65334AE71CC9C924007B0548 /* VideoCaptureController.swift in Sources */,
+				65A455731CCF26BB00074905 /* VideoCaptureDevice.swift in Sources */,
+				65334AEB1CCAAC66007B0548 /* FaceDetector.swift in Sources */,
 				653545B71CC9C293007325D2 /* ViewController.swift in Sources */,
 				653545B51CC9C293007325D2 /* AppDelegate.swift in Sources */,
 			);
@@ -484,6 +512,7 @@
 				653545DB1CC9C293007325D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		653545DC1CC9C293007325D2 /* Build configuration list for PBXNativeTarget "face-itTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +521,7 @@
 				653545DE1CC9C293007325D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		653545DF1CC9C293007325D2 /* Build configuration list for PBXNativeTarget "face-itUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +530,7 @@
 				653545E11CC9C293007325D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
