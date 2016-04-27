@@ -85,19 +85,17 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     }
     
     private func setDataOutput() {
-        if (nil == self.dataOutput) {
-            self.dataOutput = AVCaptureVideoDataOutput()
-            
-            var videoSettings = [NSObject : AnyObject]()
-            videoSettings[kCVPixelBufferPixelFormatTypeKey] = Int(CInt(kCVPixelFormatType_32BGRA))
-            
-            self.dataOutput!.videoSettings = videoSettings
-            self.dataOutput!.alwaysDiscardsLateVideoFrames = true
-            
-            self.dataOutputQueue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL)
-            
-            self.dataOutput!.setSampleBufferDelegate(self, queue: self.dataOutputQueue!)
-        }
+        self.dataOutput = AVCaptureVideoDataOutput()
+        
+        var videoSettings = [NSObject : AnyObject]()
+        videoSettings[kCVPixelBufferPixelFormatTypeKey] = Int(CInt(kCVPixelFormatType_32BGRA))
+        
+        self.dataOutput!.videoSettings = videoSettings
+        self.dataOutput!.alwaysDiscardsLateVideoFrames = true
+        
+        self.dataOutputQueue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL)
+        
+        self.dataOutput!.setSampleBufferDelegate(self, queue: self.dataOutputQueue!)
     }
     
     private func addDataOutputToSession() throws {
