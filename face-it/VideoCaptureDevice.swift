@@ -14,14 +14,14 @@ class VideoCaptureDevice {
     static func create() -> AVCaptureDevice {
         var device: AVCaptureDevice?
         
-        AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo).forEach { videoDevice in
-            if (videoDevice.position == AVCaptureDevicePosition.Front) {
+        AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo).forEach { videoDevice in
+            if ((videoDevice as AnyObject).position == AVCaptureDevicePosition.front) {
                 device = videoDevice as? AVCaptureDevice
             }
         }
         
         if (nil == device) {
-            device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+            device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         }
         
         return device!

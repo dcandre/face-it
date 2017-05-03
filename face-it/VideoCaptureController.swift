@@ -33,16 +33,16 @@ class VideoCaptureController: UIViewController {
         videoCapture!.stopCapturing()
     }
     
-    @IBAction func touchDown(sender: AnyObject) {
+    @IBAction func touchDown(_ sender: AnyObject) {
         let button = sender as! UIButton
-        button.setTitle("Stop", forState: UIControlState.Normal)
+        button.setTitle("Stop", for: UIControlState())
         
         startCapturing()
     }
     
-    @IBAction func touchUp(sender: AnyObject) {
+    @IBAction func touchUp(_ sender: AnyObject) {
         let button = sender as! UIButton
-        button.setTitle("Start", forState: UIControlState.Normal)
+        button.setTitle("Start", for: UIControlState())
         
         stopCapturing()
     }

@@ -20,14 +20,14 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     var preview: CALayer?
     var faceDetector: FaceDetector?
     var dataOutput: AVCaptureVideoDataOutput?
-    var dataOutputQueue: dispatch_queue_t?
+    var dataOutputQueue: DispatchQueue?
     var previewView: UIView?
     
-    enum VideoCaptureError: ErrorType {
-        case SessionPresetNotAvailable
-        case InputDeviceNotAvailable
-        case InputCouldNotBeAddedToSession
-        case DataOutputCouldNotBeAddedToSession
+    enum VideoCaptureError: Error {
+        case sessionPresetNotAvailable
+        case inputDeviceNotAvailable
+        case inputCouldNotBeAddedToSession
+        case dataOutputCouldNotBeAddedToSession
     }
     
     override init() {
@@ -38,118 +38,118 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         faceDetector = FaceDetector()
     }
     
-    private func setSessionPreset() throws {
+    fileprivate func setSessionPreset() throws {
         if (session!.canSetSessionPreset(AVCaptureSessionPreset640x480)) {
             session!.sessionPreset = AVCaptureSessionPreset640x480
         }
         else {
-            throw VideoCaptureError.SessionPresetNotAvailable
+            throw VideoCaptureError.sessionPresetNotAvailable
         }
     }
     
-    private func setDeviceInput() throws {
+    fileprivate func setDeviceInput() throws {
         do {
             self.input = try AVCaptureDeviceInput(device: self.device)
         }
         catch {
-            throw VideoCaptureError.InputDeviceNotAvailable
+            throw VideoCaptureError.inputDeviceNotAvailable
         }
     }
     
-    private func addInputToSession() throws {
+    fileprivate func addInputToSession() throws {
         if (session!.canAddInput(self.input)) {
             session!.addInput(self.input)
         }
         else {
-            throw VideoCaptureError.InputCouldNotBeAddedToSession
+            throw VideoCaptureError.inputCouldNotBeAddedToSession
         }
     }
     
-    private func addPreviewToView(view: UIView) {
+    fileprivate func addPreviewToView(_ view: UIView) {
         self.preview = AVCaptureVideoPreviewLayer(session: session!)
         self.preview!.frame = view.bounds
         
         view.layer.addSublayer(self.preview!)
     }
     
-    private func stopSession() {
+    fileprivate func stopSession() {
         if let runningSession = session {
             runningSession.stopRunning()
         }
     }
     
-    private func removePreviewFromView() {
+    fileprivate func removePreviewFromView() {
         if let previewLayer = preview {
             previewLayer.removeFromSuperlayer()
         }
     }
     
-    private func setDataOutput() {
+    fileprivate func setDataOutput() {
         self.dataOutput = AVCaptureVideoDataOutput()
         
-        var videoSettings = [NSObject : AnyObject]()
-        videoSettings[kCVPixelBufferPixelFormatTypeKey] = Int(CInt(kCVPixelFormatType_32BGRA))
+        var videoSettings = [AnyHashable: Any]()
+        videoSettings[kCVPixelBufferPixelFormatTypeKey as AnyHashable] = Int(CInt(kCVPixelFormatType_32BGRA))
         
         self.dataOutput!.videoSettings = videoSettings
         self.dataOutput!.alwaysDiscardsLateVideoFrames = true
         
-        self.dataOutputQueue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL)
+        self.dataOutputQueue = DispatchQueue(label: "VideoDataOutputQueue", attributes: [])
         
         self.dataOutput!.setSampleBufferDelegate(self, queue: self.dataOutputQueue!)
     }
     
-    private func addDataOutputToSession() throws {
+    fileprivate func addDataOutputToSession() throws {
         if (self.session!.canAddOutput(self.dataOutput!)) {
             self.session!.addOutput(self.dataOutput!)
         }
         else {
-            throw VideoCaptureError.DataOutputCouldNotBeAddedToSession
+            throw VideoCaptureError.dataOutputCouldNotBeAddedToSession
         }
     }
     
-    private func getImageFromBuffer(buffer: CMSampleBuffer) -> CIImage {
+    fileprivate func getImageFromBuffer(_ buffer: CMSampleBuffer) -> CIImage {
         let pixelBuffer = CMSampleBufferGetImageBuffer(buffer)
         
         let attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, buffer, kCMAttachmentMode_ShouldPropagate)
       
-        let image = CIImage(CVPixelBuffer: pixelBuffer!, options: attachments as? [String : AnyObject])
+        let image = CIImage(cvPixelBuffer: pixelBuffer!, options: attachments as? [String : AnyObject])
         
         return image
     }
     
-    private func getFacialFeaturesFromImage(image: CIImage) -> [CIFeature] {
+    fileprivate func getFacialFeaturesFromImage(_ image: CIImage) -> [CIFeature] {
         let imageOptions = [CIDetectorImageOrientation : 6]
         
-        return self.faceDetector!.getFacialFeaturesFromImage(image, options: imageOptions)
+        return self.faceDetector!.getFacialFeaturesFromImage(image, options: imageOptions as [String : AnyObject])
     }
     
-    private func transformFacialFeaturePosition(xPosition: CGFloat, yPosition: CGFloat, videoRect: CGRect, previewRect: CGRect, isMirrored: Bool) -> CGRect {
+    fileprivate func transformFacialFeaturePosition(_ xPosition: CGFloat, yPosition: CGFloat, videoRect: CGRect, previewRect: CGRect, isMirrored: Bool) -> CGRect {
     
         var featureRect = CGRect(origin: CGPoint(x: xPosition, y: yPosition), size: CGSize(width: 0, height: 0))
         let widthScale = previewRect.size.width / videoRect.size.height
         let heightScale = previewRect.size.height / videoRect.size.width
         
-        let transform = isMirrored ? CGAffineTransformMake(0, heightScale, -widthScale, 0, previewRect.size.width, 0) :
-            CGAffineTransformMake(0, heightScale, widthScale, 0, 0, 0)
+        let transform = isMirrored ? CGAffineTransform(a: 0, b: heightScale, c: -widthScale, d: 0, tx: previewRect.size.width, ty: 0) :
+            CGAffineTransform(a: 0, b: heightScale, c: widthScale, d: 0, tx: 0, ty: 0)
         
-        featureRect = CGRectApplyAffineTransform(featureRect, transform)
+        featureRect = featureRect.applying(transform)
         
-        featureRect = CGRectOffset(featureRect, previewRect.origin.x, previewRect.origin.y)
+        featureRect = featureRect.offsetBy(dx: previewRect.origin.x, dy: previewRect.origin.y)
         
         return featureRect
     }
 
     
-    private func getFeatureView() -> UIView {
-        let heartView = NSBundle.mainBundle().loadNibNamed("HeartView", owner: self, options: nil)[0] as? UIView
-        heartView!.backgroundColor = UIColor.clearColor()
+    fileprivate func getFeatureView() -> UIView {
+        let heartView = Bundle.main.loadNibNamed("HeartView", owner: self, options: nil)?[0] as? UIView
+        heartView!.backgroundColor = UIColor.clear
         heartView!.layer.removeAllAnimations()
         heartView!.tag = 1001
         
         return heartView!
     }
     
-    private func removeFeatureViews() {
+    fileprivate func removeFeatureViews() {
         if let pv = previewView {
             for view in pv.subviews {
                 if (view.tag == 1001) {
@@ -159,7 +159,7 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         }
     }
     
-    private func addEyeViewToPreview(xPosition: CGFloat, yPosition: CGFloat, cleanAperture: CGRect) {
+    fileprivate func addEyeViewToPreview(_ xPosition: CGFloat, yPosition: CGFloat, cleanAperture: CGRect) {
         let eyeView = getFeatureView()
         let isMirrored = preview!.contentsAreFlipped()
         let previewBox = preview!.frame
@@ -174,7 +174,7 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         eyeView.frame = eyeFrame
     }
     
-    private func alterPreview(features: [CIFeature], cleanAperture: CGRect) {
+    fileprivate func alterPreview(_ features: [CIFeature], cleanAperture: CGRect) {
         removeFeatureViews()
         
         if (features.count == 0 || cleanAperture == CGRect.zero || !isCapturing) {
@@ -198,7 +198,7 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         
     }
     
-    func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
+    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
         
         let image = getImageFromBuffer(sampleBuffer)
         
@@ -208,12 +208,12 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         
         let cleanAperture = CMVideoFormatDescriptionGetCleanAperture(formatDescription!, false)
         
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.alterPreview(features, cleanAperture: cleanAperture)
         }
     }
     
-    func startCapturing(previewView: UIView) throws {
+    func startCapturing(_ previewView: UIView) throws {
         isCapturing = true
         
         self.previewView = previewView

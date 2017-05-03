@@ -19,12 +19,12 @@ class FaceDetector {
         context = CIContext()
         
         options = [String : AnyObject]()
-        options![CIDetectorAccuracy] = CIDetectorAccuracyLow
+        options![CIDetectorAccuracy] = CIDetectorAccuracyLow as AnyObject
         
         detector = CIDetector(ofType: CIDetectorTypeFace, context: context!, options: options!)
     }
     
-    func getFacialFeaturesFromImage(image: CIImage, options: [String : AnyObject]) -> [CIFeature] {
-        return self.detector!.featuresInImage(image, options: options)
+    func getFacialFeaturesFromImage(_ image: CIImage, options: [String : AnyObject]) -> [CIFeature] {
+        return self.detector!.features(in: image, options: options)
     }
 }
