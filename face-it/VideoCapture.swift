@@ -141,12 +141,12 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
 
     
     fileprivate func getFeatureView() -> UIView {
-        let heartView = Bundle.main.loadNibNamed("HeartView", owner: self, options: nil)?[0] as? UIView
-        heartView!.backgroundColor = UIColor.clear
-        heartView!.layer.removeAllAnimations()
-        heartView!.tag = 1001
+        let smileyView = Bundle.main.loadNibNamed("SmileyView", owner: self, options: nil)?[0] as? UIView
+        smileyView!.backgroundColor = UIColor.clear
+        smileyView!.layer.removeAllAnimations()
+        smileyView!.tag = 1001
         
-        return heartView!
+        return smileyView!
     }
     
     fileprivate func removeFeatureViews() {
@@ -160,18 +160,18 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     }
     
     fileprivate func addEyeViewToPreview(_ xPosition: CGFloat, yPosition: CGFloat, cleanAperture: CGRect) {
-        let eyeView = getFeatureView()
+        let smileyView = getFeatureView()
         let isMirrored = preview!.contentsAreFlipped()
         let previewBox = preview!.frame
         
-        previewView!.addSubview(eyeView)
+        previewView!.addSubview(smileyView)
         
-        var eyeFrame = transformFacialFeaturePosition(xPosition, yPosition: yPosition, videoRect: cleanAperture, previewRect: previewBox, isMirrored: isMirrored)
+        var smileyFrame = transformFacialFeaturePosition(xPosition, yPosition: yPosition, videoRect: cleanAperture, previewRect: previewBox, isMirrored: isMirrored)
         
-        eyeFrame.origin.x -= 37
-        eyeFrame.origin.y -= 37
+        smileyFrame.origin.x -= 37
+        smileyFrame.origin.y -= 37
         
-        eyeView.frame = eyeFrame
+        smileyView.frame = smileyFrame
     }
     
     fileprivate func alterPreview(_ features: [CIFeature], cleanAperture: CGRect) {
@@ -182,18 +182,11 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         }
         
         for feature in features {
-            let faceFeature = feature as? CIFaceFeature
-            
-            if (faceFeature!.hasLeftEyePosition) {
-                
-                addEyeViewToPreview(faceFeature!.leftEyePosition.x, yPosition: faceFeature!.leftEyePosition.y, cleanAperture: cleanAperture)
-            }
-            
-            if (faceFeature!.hasRightEyePosition) {
-                
-                addEyeViewToPreview(faceFeature!.rightEyePosition.x, yPosition: faceFeature!.rightEyePosition.y, cleanAperture: cleanAperture)
-            }
-            
+            if  let faceFeature = feature as? CIFaceFeature{
+                if faceFeature.hasMouthPosition{
+                    addEyeViewToPreview(faceFeature.mouthPosition.x, yPosition: faceFeature.mouthPosition.y, cleanAperture: cleanAperture)
+                }
+            }            
         }
         
     }

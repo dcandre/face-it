@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "653545B01CC9C293007325D2"
-               BuildableName = "face-it.app"
-               BlueprintName = "face-it"
-               ReferencedContainer = "container:face-it.xcodeproj">
+               BuildableName = "SmileHunter.app"
+               BlueprintName = "SmileHunter"
+               ReferencedContainer = "container:SmileHunter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "653545C41CC9C293007325D2"
-               BuildableName = "face-itTests.xctest"
-               BlueprintName = "face-itTests"
-               ReferencedContainer = "container:face-it.xcodeproj">
+               BuildableName = "SmileHunterTests.xctest"
+               BlueprintName = "SmileHunterTests"
+               ReferencedContainer = "container:SmileHunter.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "653545CF1CC9C293007325D2"
-               BuildableName = "face-itUITests.xctest"
-               BlueprintName = "face-itUITests"
-               ReferencedContainer = "container:face-it.xcodeproj">
+               BuildableName = "SmileHunterUITests.xctest"
+               BlueprintName = "SmileHunterUITests"
+               ReferencedContainer = "container:SmileHunter.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "653545B01CC9C293007325D2"
-            BuildableName = "face-it.app"
-            BlueprintName = "face-it"
-            ReferencedContainer = "container:face-it.xcodeproj">
+            BuildableName = "SmileHunter.app"
+            BlueprintName = "SmileHunter"
+            ReferencedContainer = "container:SmileHunter.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "653545B01CC9C293007325D2"
-            BuildableName = "face-it.app"
-            BlueprintName = "face-it"
-            ReferencedContainer = "container:face-it.xcodeproj">
+            BuildableName = "SmileHunter.app"
+            BlueprintName = "SmileHunter"
+            ReferencedContainer = "container:SmileHunter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "653545B01CC9C293007325D2"
-            BuildableName = "face-it.app"
-            BlueprintName = "face-it"
-            ReferencedContainer = "container:face-it.xcodeproj">
+            BuildableName = "SmileHunter.app"
+            BlueprintName = "SmileHunter"
+            ReferencedContainer = "container:SmileHunter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

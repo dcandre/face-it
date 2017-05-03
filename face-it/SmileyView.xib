@@ -15,15 +15,22 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="❤️" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kzC-y1-0ro">
-                    <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="69"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smiley" translatesAutoresizingMaskIntoConstraints="NO" id="YW2-30-4Fq">
+                    <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="OIc-bI-uGh"/>
+                        <constraint firstAttribute="width" constant="70" id="Pwa-13-FMv"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="YW2-30-4Fq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="0JB-Xh-jbs"/>
+                <constraint firstItem="YW2-30-4Fq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ci6-BO-2p2"/>
+            </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="smiley" width="35" height="35"/>
+    </resources>
 </document>

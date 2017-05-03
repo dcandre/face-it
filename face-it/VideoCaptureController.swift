@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class VideoCaptureController: UIViewController {
+    var isCapturing : Bool = false;
+    
     var videoCapture: VideoCapture?
     
     override func viewDidLoad() {
@@ -20,12 +22,14 @@ class VideoCaptureController: UIViewController {
         stopCapturing()
     }
     
-    func startCapturing() {
+    func startCapturing() -> Bool {
         do {
             try videoCapture!.startCapturing(self.view)
+            return true;
         }
         catch {
             // Error
+            return false;
         }
     }
     
@@ -33,18 +37,19 @@ class VideoCaptureController: UIViewController {
         videoCapture!.stopCapturing()
     }
     
-    @IBAction func touchDown(_ sender: AnyObject) {
-        let button = sender as! UIButton
-        button.setTitle("Stop", for: UIControlState())
-        
-        startCapturing()
+    @IBAction func startButton_touchedUpInside(_ sender: Any) {
+        if !self.isCapturing{
+            if self.startCapturing(){
+                self.isCapturing = true;
+                let button = sender as! UIButton
+                button.setTitle("Stop", for: .normal)
+            }
+        }
+        else{
+            self.stopCapturing();
+            self.isCapturing = false;
+            let button = sender as! UIButton
+            button.setTitle("Start", for: .normal)
+        }
     }
-    
-    @IBAction func touchUp(_ sender: AnyObject) {
-        let button = sender as! UIButton
-        button.setTitle("Start", for: UIControlState())
-        
-        stopCapturing()
-    }
-    
 }
